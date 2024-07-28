@@ -1,0 +1,17 @@
+/* index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos personalizados */
+nav ul {
+  @apply list-none p-0;
+}
+
+nav ul li {
+  @apply inline mr-4;
+}
+
+nav a {
+  @apply text-blue-500 hover:text-blue-700 font-semibold;
+}

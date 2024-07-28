@@ -1,10 +1,15 @@
-import { DataTypes, Model } from "sequelize";
+// models/Category.js
+import { DataTypes } from "sequelize";
 import sequelize from "../config/dataBase.js";
 
-class Category extends Model {}
-
-Category.init(
+const Category = sequelize.define(
+  "Category",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -13,47 +18,22 @@ Category.init(
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
-      allowNull: true, // Permitir valores nulos inicialmente
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {
-    sequelize,
-    modelName: "Category",
-    tableName: "categories",
-    timestamps: true, // Usa los campos created_at y updated_at
-    createdAt: "created_at", // Mapea el campo created_at
-    updatedAt: "updated_at", // Mapea el campo updated_at
+    tableName: "Categories",
+    underscored: true,
+    timestamps: false,
   }
 );
-
-(async () => {
-  try {
-    // Sincroniza el modelo con la base de datos
-    await sequelize.sync({ alter: true });
-
-    // Actualiza las filas existentes para que tengan valores válidos
-    await Category.update(
-      { created_at: sequelize.fn("NOW"), updated_at: sequelize.fn("NOW") },
-      { where: { created_at: null } }
-    );
-
-    // Modifica la columna para que no permita valores nulos
-    await sequelize.query(`
-      ALTER TABLE categories 
-      MODIFY created_at DATETIME NOT NULL,
-      MODIFY updated_at DATETIME NOT NULL
-    `);
-
-    console.log("Database synchronized successfully.");
-  } catch (error) {
-    console.error("Error synchronizing the database:", error);
-  }
-})();
 
 export default Category;

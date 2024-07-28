@@ -1,35 +1,48 @@
 import express from "express";
 import dotenv from "dotenv";
 import sequelize from "./config/dataBase.js";
-import router from "./routes/indexRoutes.js"; // Asegúrate de que esta ruta sea correcta
+import router from "./routes/indexRoutes.js";
+import errorHandler from "./middleware/error.js";
+import cors from "cors";
+import morgan from "morgan";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware para JSON
+// Middleware configuration
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+  })
+);
 app.use(express.json());
-
-// Usar las rutas
+app.use(morgan("combined"));
 app.use("/api", router);
+app.use(errorHandler);
 
-async function startServer() {
+const startServer = async () => {
   try {
+    // Verify database connection
     await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
+    console.log("Database connection has been established successfully.");
+
+    // Synchronize the database
+    await sequelize.sync({ alter: true });
+    console.log("Database synchronized successfully.");
+
+    // Start the server
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    console.error("Unable to start the server:", error);
   }
-}
-sequelize.sync({ alter: true }) // Usa alter en lugar de force para mantener datos existentes
-  .then(() => {
-    console.log("Sincronización de la base de datos completada");
-  })
-  .catch((error) => {
-    console.error("Error al sincronizar la base de datos:", error);
-  });
+};
+
+// Log database details
+console.log(`Database Name: ${process.env.DB_NAME || "Not Defined"}`);
+console.log(`Database User: ${process.env.DB_USER || "Not Defined"}`);
+
 startServer();

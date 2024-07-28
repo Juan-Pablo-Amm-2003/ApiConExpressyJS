@@ -1,12 +1,16 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/dataBase.js";
-import Category from "./Category.js"; // Asegúrate de que la ruta sea correcta
+import sequelize from "../config/dataBase.js"; // Asegúrate de que la ruta sea correcta
 
 const Product = sequelize.define(
   "Product",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     description: {
@@ -23,17 +27,28 @@ const Product = sequelize.define(
     },
     category_id: {
       type: DataTypes.INTEGER,
+      allowNull: true,
       references: {
-        model: Category, // Asegúrate de que coincida con el nombre del modelo
+        model: "Categories", // Asegúrate de que el nombre del modelo sea correcto
         key: "id",
       },
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
-    timestamps: true, // Para que use createdAt y updatedAt
+    timestamps: true,
+    tableName: "products",
   }
 );
 
-Product.belongsTo(Category, { foreignKey: "category_id" }); // Establece la relación
-
+// No olvides exportar el modelo
 export default Product;

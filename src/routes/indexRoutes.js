@@ -1,10 +1,10 @@
 import express from "express";
-import categoryRoutes from "./categoryRoutes.js"; // Asegúrate de que esta ruta sea correcta
-import productRoutes from "./productRoutes.js"; // Asegúrate de que esta ruta sea correcta
+import productRoutes from "./productRoutes.js";
+import categoryRoutes from "./categoryRoutes.js";
 
 const router = express.Router();
 
-router.use("/categories", categoryRoutes);
 router.use("/products", productRoutes);
+router.use("/categories", categoryRoutes);
 
 export default router;
