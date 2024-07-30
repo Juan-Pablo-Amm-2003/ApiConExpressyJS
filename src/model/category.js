@@ -1,4 +1,3 @@
-// models/Category.js
 import { DataTypes } from "sequelize";
 import sequelize from "../config/dataBase.js";
 

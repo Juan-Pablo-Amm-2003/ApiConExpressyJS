@@ -1,8 +1,7 @@
-// models/index.js
 import { Sequelize } from "sequelize";
 import sequelize from "../config/dataBase.js";
-import Category from "./Category.js";
-import Product from "./Product.js";
+import Category from "./category.js";
+import Product from "./product.js";
 
 // Definir relaciones entre modelos
 Product.belongsTo(Category, { foreignKey: "category_id" });

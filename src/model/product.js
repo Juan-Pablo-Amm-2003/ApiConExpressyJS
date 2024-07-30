@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/dataBase.js"; // Asegúrate de que la ruta sea correcta
+import sequelize from "../config/dataBase.js"; 
 
 const Product = sequelize.define(
   "Product",
@@ -29,7 +29,7 @@ const Product = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: "Categories", // Asegúrate de que el nombre del modelo sea correcto
+        model: "Categories", 
         key: "id",
       },
     },
@@ -50,5 +50,4 @@ const Product = sequelize.define(
   }
 );
 
-// No olvides exportar el modelo
 export default Product;

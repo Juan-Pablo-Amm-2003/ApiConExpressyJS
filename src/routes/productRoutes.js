@@ -7,13 +7,17 @@ import {
   deleteProduct,
 } from "../controllers/productController.js";
 
+import { validateProduct, validateID } from "../middleware/validators.js";
+
+
+
 const router = express.Router();
 
 router.get("/", getAllProducts);
-router.get("/:id", getProductById); // Remueve la validación de ID
-router.post("/", createProduct); // Remueve la validación de producto
-router.put("/:id", updateProduct); // Remueve la validación de ID y producto
-router.delete("/:id", deleteProduct); // Remueve la validación de ID
+router.get("/:id", validateID ,getProductById); // Remueve la validación de ID
+router.post("/", validateProduct,createProduct); // Remueve la validación de producto
+router.put("/:id", validateID, validateProduct,updateProduct); // Remueve la validación de ID y producto
+router.delete("/:id", validateID,deleteProduct); // Remueve la validación de ID
 
 
 

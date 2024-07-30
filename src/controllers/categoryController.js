@@ -1,5 +1,5 @@
-// controllers/categoryController.js
-import Category from "../model/Category.js";
+
+import Category from "../model/category.js";
 
 // Obtener todas las categorías
 export const getAllCategories = async (req, res) => {

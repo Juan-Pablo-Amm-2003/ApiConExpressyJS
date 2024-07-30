@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Configuración de la base de datos
+
 const sequelize = new Sequelize(
   process.env.DB_NAME, // Nombre de la base de datos
   process.env.DB_USER, // Usuario de la base de datos
