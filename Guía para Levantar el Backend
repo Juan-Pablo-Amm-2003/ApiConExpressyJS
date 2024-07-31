@@ -1,0 +1,66 @@
+Guía para Levantar el Backend
+Este documento proporciona instrucciones paso a paso sobre cómo configurar y ejecutar el backend de este proyecto.
+
+Requisitos Previos
+Asegúrate de tener instalados los siguientes elementos en tu máquina:
+
+Node.js 
+npm 
+
+
+Configuración Inicial
+Clona el repositorio:
+git clone https://github.com/tu-usuario/tu-repositorio.git
+cd tu-repositorio
+Instala las dependencias:
+npm install
+Configura las variables de entorno:
+
+Crea un archivo .env en la raíz del proyecto y define las siguientes variables de entorno:
+PORT=3000
+DB_NAME=nombre_de_tu_base_de_datos
+DB_USER=usuario_de_tu_base_de_datos
+DB_PASSWORD=contraseña_de_tu_base_de_datos
+DB_HOST=host_de_tu_base_de_datos
+DB_DIALECT=dialect_de_tu_base_de_datos (por ejemplo, mysql, postgres, etc.)
+
+Estructura del Proyecto
+index.js: Archivo principal que configura y levanta el servidor.
+config/dataBase.js: Archivo de configuración de Sequelize para la conexión a la base de datos.
+routes/indexRoutes.js: Archivo que define las rutas de la API.
+middleware/error.js: Middleware para el manejo de errores.
+models/: Carpeta que contiene los modelos de Sequelize.
+controllers/: Carpeta que contiene los controladores de las rutas.
+
+Ejecución del Servidor
+Levanta el servidor:  
+npm start
+
+El servidor estará corriendo en el puerto definido en el archivo .env. Por defecto, es el puerto 3000.
+
+Verifica la conexión a la base de datos:
+
+El servidor intentará conectar con la base de datos y sincronizar los modelos definidos en models/.
+
+Uso de la API
+La API está configurada para responder a las solicitudes en la ruta /api. Asegúrate de definir tus rutas en routes/indexRoutes.js.
+
+Middlewares
+CORS: Configurado para permitir solicitudes desde http://localhost:3001.
+Morgan: Utilizado para el registro de solicitudes HTTP.
+Error Handler: Middleware para el manejo centralizado de errores.
+Migraciones y Modelos
+Este proyecto utiliza Sequelize para el ORM. Las migraciones y los modelos se pueden gestionar mediante los comandos de Sequelize. Asegúrate de sincronizar la base de datos con:
+
+await sequelize.sync({ alter: true });
+
+
+Troubleshooting
+Si encuentras algún problema al levantar el servidor, verifica lo siguiente:
+
+Asegúrate de que las variables de entorno están correctamente configuradas en el archivo .env.
+Revisa los mensajes de error en la consola para identificar posibles problemas de configuración o de conexión a la base de datos.
+Consulta la documentación de Sequelize para obtener más detalles sobre la configuración y uso del ORM.
+Contribuciones
+Si deseas contribuir a este proyecto, por favor abre un pull request o crea un issue en el repositorio.
+
